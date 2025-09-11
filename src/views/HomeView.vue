@@ -1,6 +1,6 @@
 <script setup>
-import PostItem from '@/components/PostItem.vue';
-import Wrapper from '@/components/Wrapper.vue';
+import PostItem from '../components/PostItem.vue';
+import Wrapper from '../components/Wrapper.vue';
 
 const post = [
 
