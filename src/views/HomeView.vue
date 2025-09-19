@@ -1,96 +1,85 @@
 <script setup>
-import PostItem from '../components/PostItem.vue';
-import Wrapper from '../components/Wrapper.vue';
+import { ref } from 'vue'
+import { usePostsStore } from '@/stores/posts'
+import PostItem from '../components/PostItem.vue'
+import Wrapper from '../components/Wrapper.vue'
 
-const post = [
+const postStore = usePostsStore()
+const postFilter = ref('all')
 
-  {
-    "userId": 1,
-    "id": 1,
-    "name": "Juan Dela Cruz",
-    "date": "2025-09-03",
-    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-  },
-  {
-    "userId": 1,
-    "id": 2,
-    "name": "Maria Santos",
-    "date": "2025-09-02",
-    "title": "qui est esse",
-    "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-  },
-  {
-    "userId": 1,
-    "id": 3,
-    "name": "Pedro Reyes",
-    "date": "2025-09-01",
-    "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-    "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
-  },
-  {
-    "userId": 1,
-    "id": 4,
-    "name": "Ana Lopez",
-    "date": "2025-08-30",
-    "title": "eum et est occaecati",
-    "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
-  }
-]
+// toggle filter
+const setPostFilter = () => {
+  postFilter.value = postFilter.value === 'all' ? 'saved' : 'all'
+}
 
+postStore.getPosts()
 </script>
 
 <template>
+  <div class="page-header">
+    <div>
+      <h3>{{ postFilter === 'all' ? 'All Posts' : 'Saved Posts' }}</h3>
+      <span v-show="postStore.loading" class=" material-icons spin">cached</span>
+    </div>
+    <button @click="setPostFilter">
+      {{ postFilter === 'all' ? 'Show Saved Posts' : 'Show All Posts' }}
+    </button>
+  </div>
+
+  <div v-if="postStore.errMsg" class="error">{{ postStore.errMsg }}</div>
+
   <main>
-    <div v-for="post in post">
-  <div class="wrapper">
-    <div class="header">
-      <span>Written by {{ post.name }} on {{ post.date }}</span>
-      <div>
-        <button class="del materials-icon">delete</button>
-        <button class="save materials-icon">bookmark_border</button>
+    <!-- ALL POSTS -->
+    <div v-if="postFilter === 'all'">
+      <div v-for="post in postStore.sorted" :key="post.id" class="wrapper">
+        <div class="header">
+          <span>Written by {{ post.name }} on {{ post.date }}</span>
+          <div>
+            <button
+              @click="postStore.deletePost(post.id)"
+              class="del materials-icon"
+            >
+              delete
+            </button>
+            <button
+              @click="postStore.toggleSave(post.id)"
+              class="save materials-icon"
+            >
+              bookmark_border
+            </button>
+          </div>
+        </div>
+        <h2 class="title-box">{{ post.title }}</h2>
+        <p class="body-box">{{ post.body }}</p>
       </div>
     </div>
-<h2>{{ post.title }}</h2>
-<p>{{ post.body }}</p>
-    
-    
-  </div>
-   </div>
-  </main> 
-</template> 
 
-<style>
-/* 🔘 Buttons inside circle */
-.materials-icon {
-  font-family: "Material Icons";
-  font-size: 20px;
-  border: none;
-  background: #eae4e4;        /* white circle background */
-  color: #f3eded;             /* default icon color */
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;      /* makes it circle */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* subtle shadow */
-  transition: background 0.2s, transform 0.2s;
-}
-
-/* Hover effect */
-.materials-icon:hover {
-  background: #0d0c0c;   /* slightly darker circle */
-  transform: scale(1.1);
-}
-
-/* ❌ Delete button (red icon) */
-.del {
-  color: #e57169;
-}
-
-/* 🔖 Bookmark button (blue icon) */
-.save {
-  color: #e1505c;
-}
-</style>
+    <!-- SAVED POSTS -->
+    <div v-if="postFilter === 'saved'">
+      <div v-for="post in postStore.saved" :key="post.id" class="wrapper">
+        <div class="header">
+          <span>Written by {{ post.name }} on {{ post.date }}</span>
+          <div>
+            <button
+              @click="postStore.deletePost(post.id)"
+              class="del materials-icon"
+            >
+              delete
+            </button>
+            <button
+              @click="postStore.toggleSave(post.id)"
+              class="save materials-icon"
+            >
+              bookmark_border
+            </button>
+          </div>
+        </div>
+        <h2 class="title-box">{{ post.title }}</h2>
+        <p class="body-box">{{ post.body }}</p>
+      </div>
+    </div>
+  </main>
+</template>
 
 <style>
 /* 🌈 Page background */
@@ -108,19 +97,42 @@ body {
   padding: 24px;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.page-header {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 16px 24px;
+  background: #0d47a1;
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error {
+  max-width: 700px;
+  margin: 10px auto;
+  padding: 12px 16px;
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 /* 📌 Header bar */
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: -24px -24px 16px -24px;
   padding: 12px 24px;
   background: #787c7e;
   border-bottom: 1px solid #d0e3ff;
-  color: #444;
+  color: #fff;
   font-size: 14px;
   border-radius: 16px 16px 0 0;
 }
@@ -147,10 +159,10 @@ body {
   color: #22ae89;
 }
 
-/* 📝 Title and Body styles with background */
+/* 📝 Title and Body styles */
 .title-box {
-  background: #bbdefb; /* light blue */
-  color: #0d47a1;      /* dark blue text */
+  background: #bbdefb;
+  color: #0d47a1;
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 26px;
@@ -158,11 +170,27 @@ body {
 }
 
 .body-box {
-  background: #f1f8e9; /* light green */
-  color: #33691e;      /* dark green text */
+  background: #f1f8e9;
+  color: #33691e;
   padding: 16px;
   border-radius: 8px;
   line-height: 1.8;
   font-size: 16px;
 }
-</style>
+
+/* 🔄 Spinner animation */
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+</style> 

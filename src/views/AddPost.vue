@@ -1,21 +1,41 @@
 <script setup>
-import Wrapper from '@/components/Wrapper.vue';
+import { reactive, computed } from 'vue'
+import Wrapper from '@/components/Wrapper.vue'
+import {useRouter} from 'vue-router';
+
+import { usePostsStore } from '@/stores/posts'
+
+const router = useRouter()
+const postStore =usePostsStore() 
+const post = reactive({
+  title: '',
+  body: ''
+})
+
+const isFormValid = computed(() => {
+  return post.title.trim() !== '' && post.body.trim() !== ''
+})
+
+const submit = () => {
+  postStore.addPost(post)
+  router.push({name: 'home'})
+}
 </script>
 
 <template>
   <Wrapper>
-    <form>
+    <form @submit.prevent="submit">
       <h3>Add a New Post</h3>
       <div>
         <label>Post Title</label>
-        <input type="text" placeholder="Enter your title..." />
+        <input type="text" v-model="post.title" placeholder="Enter your title..." />
       </div>
       <div>
         <label>Post Content</label>
-        <textarea rows="5" placeholder="Write something..."></textarea>
+        <textarea rows="5" v-model="post.body" placeholder="Write something..."></textarea>
       </div>
       <div>
-        <button type="submit"> Publish</button>
+        <button :disabled="!isFormValid">Publish</button>
       </div>
     </form>
   </Wrapper>
@@ -23,7 +43,7 @@ import Wrapper from '@/components/Wrapper.vue';
 
 <style lang="scss" scoped>
 form {
-  background: #1e1e2f; /* 🔥 dark card background */
+  background: #1e1e2f;
   padding: 2rem 2.5rem;
   width: 100%;
   max-width: 550px;
@@ -76,28 +96,37 @@ form {
         font-size: 0.9rem;
       }
     }
+  }
 
-    button {
-      width: 100%;
-      padding: 0.9rem;
-      background: linear-gradient(135deg, #6c63ff, #c2185b); /* 💜💖 dark gradient */
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+  /* 🚀 move button styles here */
+  button {
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, #6c63ff, #c2185b);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 15px rgba(108, 99, 255, 0.4);
-      }
+    &:hover:enabled {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(108, 99, 255, 0.4);
+    }
 
-      &:active {
-        transform: translateY(0);
-        box-shadow: none;
-      }
+    &:active:enabled {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    &:disabled {
+      background: #555; /* gray out when disabled */
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+      transform: none;
     }
   }
 }
