@@ -1,76 +1,36 @@
-{
-  "posts": [
-    {
-      "id": 1,
-      "name": "Juan Dela Cruz",
-      "date": "2025-09-03",
-      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-      "is_saved": false
-    },
-    {
-      "id": 2,
-      "name": "Maria Santos",
-      "date": "2025-09-02",
-      "title": "qui est esse",
-      "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
-      "is_saved": false
-    },
-    {
-      "id": 3,
-      "name": "Pedro Reyes",
-      "date": "2025-09-01",
-      "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-      "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
-      "is_saved": false
-    },
-    {
-      "id": 4,
-      "name": "Ana Lopez",
-      "date": "2025-08-30",
-      "title": "eum et est occaecati",
-      "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
-      "is_saved": false
-    },
-    {
-      "id": 5,
-      "title": "bvsds",
-      "body": "nbvchsd",
-      "name": "Angeline Magan",
-      "date": "2025-09-19",
-      "is_saved": false
-    },
-    {
-      "id": 6,
-      "title": "hdg",
-      "body": "nsdvhsgdf\nnsdjfhue",
-      "name": "Angeline Magan",
-      "date": "2025-09-19",
-      "is_saved": false
-    },
-    {
-      "id": 5,
-      "title": "hdsusgud",
-      "body": "hadgfuwgeui\nnjdfhwue\njbdgfuw",
-      "name": "Angeline Magan",
-      "date": "2025-09-19",
-      "is_saved": false
-    },
-    {
-      "id": 5,
-      "title": "ACTIVITY 8",
-      "body": "Finally ,mana gyud hooooo .\nAnother code napod para project hahaha",
-      "name": "Angeline Magan",
-      "date": "2025-09-19",
-      "is_saved": false
-    },
-    {
-      "id": 5,
-      "title": "ACTIVITY 8",
-      "body": "FINALLY hooo mana gyud sir\nanother code napod sa project hahahaha ",
-      "name": "Angeline Magan",
-      "date": "2025-09-19",
-      "is_saved": false
-    }
-  ]
+   {
+    "posts": [
+      {
+        "id": 1,
+        "name": "Juan Dela Cruz",
+        "date": "2025-09-03",
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+        "is_saved": false   
+      },
+      {
+        "id": 2,
+        "name": "Maria Santos",
+        "date": "2025-09-02",
+        "title": "qui est esse",
+        "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+        "is_saved": false   
+      },
+      {
+        "id": 3,
+        "name": "Pedro Reyes",
+        "date": "2025-09-01",
+        "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+        "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
+        "is_saved": false
+      },
+      {
+        "id": 4,
+        "name": "Ana Lopez",
+        "date": "2025-08-30",
+        "title": "eum et est occaecati",
+        "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
+        "is_saved": false
+      }
+    ]
 }
